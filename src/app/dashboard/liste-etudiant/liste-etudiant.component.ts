@@ -41,8 +41,7 @@ export class ListeEtudiantComponent implements OnInit{
   sortStudents(prop: string) {
     this.sortAscending = !this.sortAscending;
     this.sortDescending = !this.sortDescending;
-
-    // Vérifier l'ordre de tri actuel
+ 
     if (this.sortAscending) {
       this.Listeetudiant.sort((a:any, b:any) => a[prop].localeCompare(b[prop]));
     } else {

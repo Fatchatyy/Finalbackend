@@ -18,8 +18,7 @@ export class FoyerService {
         let headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get(`${this.UrlBackend}/foyer/retrieve-foyer/`+id, {headers})
   }
- 
-  public updatefoyerr(foyerdata: any,token:any)
+ public updatefoyerr(foyerdata: any,token:any)
   {
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
 return this.http.put(`${this.UrlBackend}/foyer/update-foyer`,foyerdata,{headers});

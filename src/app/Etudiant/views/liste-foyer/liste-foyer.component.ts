@@ -14,7 +14,7 @@ export class ListeFoyerComponent implements OnInit {
   }
   ngOnInit(): void {
 this.recuperfoyer();  }
-  Listefoyer: any = {};
+  Listefoyer: any = [];
   key: string = 'id';
   reverse: boolean = false;
   token:any="";
@@ -30,10 +30,11 @@ this.recuperfoyer();  }
   recuperfoyer() {
     this.auth.userToken$.subscribe((data:any)=>{
       this.token = data;
+      console.log("fatouma",this.token);
     })
     this.foyerservice.getAllfoyer(this.token).subscribe(
       (data) => {
-        console.log(data);
+        console.log("sdscd",data);
         this.Listefoyer = data;
         console.log(this.Listefoyer)
       },

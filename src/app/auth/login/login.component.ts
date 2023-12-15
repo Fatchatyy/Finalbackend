@@ -30,28 +30,51 @@ export class LoginComponent {
     ]),
   });
 
-  login() {
-    this.formSubmitted = true;
-    this.auth.login(this.loginForm.value).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.auth.updateUserRole(data.role);
+  // login() {
+  //   this.formSubmitted = true;
+  //   this.auth.login(this.loginForm.value).subscribe(
+  //     (data: any) => {
+  //       console.log(data);
+  //       this.auth.updateUserRole(data.role);
+  //       this.auth.updateUserToken(data.token);
+  //       if (data.role === 'ADMIN') {
+  //         this.route.navigate(['/dashboard/listefoyer']);
+  //       }
+  //       if (data.role === 'UNIVERSITY') {
+  //         this.route.navigate(['/etudiant']);
+  //       }
+  //       if (data.role === 'SUPERADMIN') {
+  //         this.route.navigate(['/signup']);
+  //       }
+  //     },
+  //     (error: any) => {
+  //       console.log(error.error.message);
+  //       this.error = error.error.message;
+  //       this.userNotFound = true;
+  //     }
+  //   );
+  // }
+  login(){
+    if(this.loginForm.valid){
+      this.auth.login(this.loginForm.value).subscribe({
+        next:(data)=>{
+          if(data && data.role=="ADMIN"){
+            this.route.navigateByUrl('dashboard/listefoyer')
+            this.auth.updateUserRole(data.role);
         this.auth.updateUserToken(data.token);
-        if (data.role === 'UNIVERSITY') {
-          this.route.navigate(['/dashboard/listefoyer']);
+          }
+          else{
+            this.route.navigateByUrl('etudiant');
+            this.auth.updateUserRole(data.role);
+            this.auth.updateUserToken(data.token);
+          }
+        },
+        error:(error)=>{
+          console.log(error);
+          this.userNotFound = true;
         }
-        if (data.role === 'STUDENT') {
-          this.route.navigate(['/signup']);
-        }
-        if (data.role === 'SUPERADMIN') {
-          this.route.navigate(['/signup']);
-        }
-      },
-      (error: any) => {
-        console.log(error.error.message);
-        this.error = error.error.message;
-        this.userNotFound = true;
-      }
-    );
+      })
+      
+    }
   }
 }
